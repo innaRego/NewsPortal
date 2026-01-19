@@ -3,26 +3,32 @@ $host = explode('?', $_SERVER['REQUEST_URI'])[0];
 $num = substr_count($host, '/');
 $path = explode('/', $host)[$num];
 
-if ($path == '' OR $path == 'index.php') 
+if ($path == '' OR $path == 'index.php')
 {
-
-// Главная страница
-$response = controllerAdmin::formLoginSite();
+    // Главная страница
+    $response = controllerAdmin::formLoginSite();
 }
-// -------------------- ВХОД --------------------
-elseif ($path == 'login') 
+// ВХОД
+elseif ($path == 'login')
 {
-   // форма входа
-   $response = controllerAdmin::loginAction();
+    // Форма входа
+    $response = controllerAdmin::loginAction();
 }
-elseif ($path == 'logout') 
+elseif ($path == 'logout')
 {
-
-   // Выход
-   $response = controllerAdmin::logoutAction();
+    // Выход
+    $response = controllerAdmin::logoutAction();
 }
-
-else 
+elseif ($path=='newsAdmin') {
+    $response=controllerAdminNews::NewsList();
+}
+elseif ($path=='newsAdd') {
+    $response=controllerAdminNews::newsAddForm();
+}
+elseif ($path == 'newsAddResult') {
+    $response = controllerAdminNews::newsAddResult();
+}
+else
 {
     // Страница не существует
     $response = controllerAdmin::error404();

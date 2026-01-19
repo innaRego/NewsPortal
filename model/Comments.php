@@ -1,21 +1,19 @@
 <?php
+require_once 'inc/Database.php';
+
 class Comments {
-    public static function insertComment($c, $id) {
-        
+
+    public static function getAllComments($newsId) {
+        $db = (new database())->connect();
+        $stmt = $db->prepare("SELECT * FROM comments WHERE news_id = ? ORDER BY created_at DESC");
+        $stmt->execute([$newsId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getCommentByNewsID($id) {
-        $query = "SELECT * FROM comments WHERE news_id=".(string)$id." ORDER BY id DESC";
-        $db = new Database();
-        $arr = $db->getAll($query);
-        return $arr;
-    }
-
-    public static function getCommentsCountByNewsID($id) {
-        $query = "SELECT count(id) as 'count' FROM comments WHERE news_id=".(string)$id;
-        $db = new Database();
-        $c = $db->getOne($query);
-        return $c;
+    public static function InsertComment($text, $newsId, $author = 'Гость') {
+        $db = (new database())->connect();
+        $stmt = $db->prepare("INSERT INTO comments (news_id, author, text, created_at) VALUES (?, ?, ?, NOW())");
+        $stmt->execute([$newsId, $author, $text]);
     }
 }
 ?>
