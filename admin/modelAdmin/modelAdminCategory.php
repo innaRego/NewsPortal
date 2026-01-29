@@ -13,3 +13,4 @@ class modelAdminCategory {
     }
 }
 //class
+?>

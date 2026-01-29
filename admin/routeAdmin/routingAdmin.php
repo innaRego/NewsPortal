@@ -22,6 +22,7 @@ elseif ($path == 'logout')
 elseif ($path=='newsAdmin') {
     $response=controllerAdminNews::NewsList();
 }
+//----------------add news
 elseif ($path=='newsAdd') {
     $response=controllerAdminNews::newsAddForm();
 }
